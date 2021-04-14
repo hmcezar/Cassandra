@@ -75,6 +75,8 @@ CONTAINS
        IF ( int_sim_type == sim_npt .OR. int_sim_type == sim_gemc .OR. &
             int_sim_type == sim_gemc_npt ) THEN
           WRITE(chkptunit,*) nvol_success(ibox), nvolumes(ibox)
+       ELSE
+          WRITE(chkptunit,*) 0, 0
        END IF
     END DO
 
@@ -97,9 +99,9 @@ CONTAINS
 
        IF ( int_sim_type == sim_npt .OR. int_sim_type == sim_gemc .OR. &
             int_sim_type == sim_gemc_npt )  THEN
-
          WRITE(chkptunit,*) box_list(ibox)%dv_max
-
+       ELSE
+         WRITE(chkptunit,*) 0.0        
        END IF
 
     END DO
@@ -214,9 +216,9 @@ SUBROUTINE Read_Checkpoint
 
        IF ( int_sim_type == sim_npt .OR. int_sim_type == sim_gemc .OR. &
             int_sim_type == sim_gemc_npt ) THEN
-
           READ(restartunit,*) nvol_success(ibox), nvolumes(ibox)
-
+       ELSE
+          READ(restartunit,*)        
        END IF
     END DO
     WRITE(logunit,*) 'Species move info read successfully'
@@ -246,10 +248,10 @@ SUBROUTINE Read_Checkpoint
 
        IF ( int_sim_type == sim_npt .OR. int_sim_type == sim_gemc .OR. &
             int_sim_type == sim_gemc_npt ) THEN
-
           READ(restartunit,*) box_list(ibox)%dv_max
           WRITE(logunit,'(2X,A,T24,F9.0)') 'max volume change', box_list(ibox)%dv_max
-
+       ELSE
+          READ(restartunit,*)
        END IF
 
     END DO
